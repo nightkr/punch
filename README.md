@@ -7,3 +7,11 @@ Smack is a rewrite of [Pow][pow] for Linux. It aims for being similarly easy to 
 [Pow]: http://pow.cx/
 [Foreman]: https://github.com/ddollar/foreman
 [xipio]: http://xip.io/
+
+
+Limitations
+-----------
+
+* No support for HTTP keep-alive
+* No built-in DNS server
+** Use lvh.me instead
