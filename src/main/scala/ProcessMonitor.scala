@@ -53,6 +53,8 @@ object ProcessMonitor {
 		pb.directory(dir)
 		pb.environment().put("PORT", port.toString)
 		pb.environment().put("DIR", dir.getAbsolutePath)
+		pb.redirectOutput(ProcessBuilder.Redirect.INHERIT)
+		pb.redirectError(ProcessBuilder.Redirect.INHERIT)
 		new ProcessMonitor(pb)
 	}
 }
