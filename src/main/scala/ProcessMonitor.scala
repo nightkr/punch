@@ -3,8 +3,6 @@ package se.nullable.smack
 import akka.actor.{Actor, Props, Kill, OneForOneStrategy, SupervisorStrategy}
 import SupervisorStrategy.Restart
 
-import scala.sys.process.{Process, ProcessBuilder}
-
 import java.io.File
 
 
@@ -12,20 +10,20 @@ case object RestartProcess
 class ProcessMonitor(processBuilder: ProcessBuilder) extends Actor {
 	var process: Process = null  // Option[T] not applicable, since this being null once the actor has actually started should be treated as an error
 
-	object RestartProcessException extends Exception
+	class RestartProcessException extends Exception
 
 	override def supervisorStrategy = OneForOneStrategy() {
-		case RestartProcessException => Restart
+		case e: RestartProcessException => Restart
 	}
 
 	override def preStart() {
-		process = processBuilder.run()
+		process = processBuilder.start()
 
 		// Launch a separate actor that kills the actor on process termination
 		context.actorOf(Props(new Actor {
 			def receive = {
 				case process: Process =>
-					process.exitValue()
+					process.waitFor()
 					sender ! RestartProcess  // Restart on crash
 			}
 		}), name = "kill_monitor") ! process
@@ -34,12 +32,12 @@ class ProcessMonitor(processBuilder: ProcessBuilder) extends Actor {
 	// Kill the process on actor termination
 	override def postStop() {
 		process.destroy()
-		process.exitValue()  // Wait for the subprocess to fully shut down
+		process.waitFor()
 	}
 
 	def receive = {
 		case RestartProcess =>
-			throw RestartProcessException
+			throw new RestartProcessException
 	}
 }
 
@@ -51,6 +49,10 @@ object ProcessMonitor {
 			else
 				Seq("sh", "-c", defaultCmd)
 
-		new ProcessMonitor(Process(cmd, cwd = dir, "PORT" -> port.toString, "DIR" -> dir.getAbsolutePath()))
+		val pb = new ProcessBuilder(cmd: _*)
+		pb.directory(dir)
+		pb.environment().put("PORT", port.toString)
+		pb.environment().put("DIR", dir.getAbsolutePath)
+		new ProcessMonitor(pb)
 	}
 }
