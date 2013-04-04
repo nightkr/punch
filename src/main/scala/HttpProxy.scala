@@ -82,6 +82,9 @@ class HttpProxySubConnectionHandler(_ioBridge: ActorRef) extends spray.io.IOClie
 
 			val serialized = HttpProxySubConnectionHandler.serializeRequest(HttpIteratees.Request(requestLine, usedHeaders, body))
 			socket.ioBridge ! IOBridge.Send(socket, serialized.toByteBuffer)
+		case Status.Failure(x) =>
+			parent ! Status.Failure(x)
+			context.stop(self)
 		case IOClient.Received(socket, bytes) =>
 			buffer ++= ByteString(bytes)
 		case IOClient.Closed(socket, cause) =>
