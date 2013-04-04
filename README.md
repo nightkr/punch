@@ -15,3 +15,9 @@ Limitations
 * No support for HTTP keep-alive
 * No built-in DNS server
   * Use lvh.me instead
+
+
+Smackfile
+---------
+
+Some services don't do very well with Foreman for some reason (for exaple [Play][play] applications). For these, you can instead provide a `Smackfile` in the application's directory. This is a simple shell script that Smack then takes care of running and monitoring, instead of starting foreman.
