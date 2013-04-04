@@ -14,4 +14,4 @@ Limitations
 
 * No support for HTTP keep-alive
 * No built-in DNS server
-** Use lvh.me instead
+  * Use lvh.me instead
