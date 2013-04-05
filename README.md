@@ -5,7 +5,7 @@ Smack is a rewrite of [Pow][pow] for Linux. It aims for being similarly easy to 
 
 
 [pow]: http://pow.cx/
-[poreman]: https://github.com/ddollar/foreman
+[foreman]: https://github.com/ddollar/foreman
 [xipio]: http://xip.io/
 
 
@@ -24,3 +24,17 @@ Some services don't do very well with Foreman for some reason (for exaple [Play]
 
 
 [play]: http://playframework.com/
+
+
+Usage
+-----
+
+1. Install [sbt][sbt] if you don't already have it
+2. Create the directory `~/.smack`
+3. Start smack: `$ sbt run` in this folder
+4. Set up a Procfile or a Smackfile in your web application's directory
+5. `$ ln -s /path/to/your/application/ ~/.smack/foobar`
+6. `$ xdg-open http://foobar.lvh.me/`
+
+
+[sbt]: http://scala-sbt.org/
