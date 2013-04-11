@@ -1,6 +1,7 @@
 package se.nullable.punch
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+import akka.kernel.Bootable
 
 import java.net.InetSocketAddress
 import java.io.File
@@ -55,11 +56,24 @@ class ProcessManager extends Actor {
 }
 
 
+class PunchKernel extends Bootable {
+	import akka.kernel.Bootable
+	val system = ActorSystem("Punch")
+
+	def startup() {
+		system.actorOf(Props[ProcessManager], name = "punch")
+	}
+
+	def shutdown() {
+		system.shutdown()
+	}
+}
+
+// Used for sbt run
 object Punch extends App {
 	println("Press enter to stop")
-	val system = ActorSystem("Punch")
-	system.actorOf(Props[ProcessManager], name = "punch")
-	//val actor = system.actorOf(Props(ForemanMonitor(new java.io.File("."), 11000)))
+	val kernel = new PunchKernel()
+	kernel.startup()
 	readLine()
-	system.shutdown()
+	kernel.shutdown()
 }
