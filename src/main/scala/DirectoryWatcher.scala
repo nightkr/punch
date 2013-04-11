@@ -1,4 +1,4 @@
-package se.nullable.smack
+package se.nullable.punch
 
 import akka.actor.Actor
 

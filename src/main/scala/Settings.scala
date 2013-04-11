@@ -1,4 +1,4 @@
-package se.nullable.smack
+package se.nullable.punch
 
 import akka.actor.{Extension, ExtensionId, ExtensionIdProvider, ExtendedActorSystem}
 
@@ -15,24 +15,24 @@ import java.net.InetSocketAddress
  
 class SettingsImpl(config: Config) extends Extension {
 	object Port {
-		val Start = config.getInt("smack.port.start")
-		val Increment = config.getInt("smack.port.increment")
+		val Start = config.getInt("punch.port.start")
+		val Increment = config.getInt("punch.port.increment")
 	}
 
 	object Proxy {
 		object Http {
-			val Host = config.getString("smack.proxy.http.host")
-			val Port = config.getInt("smack.proxy.http.port")
+			val Host = config.getString("punch.proxy.http.host")
+			val Port = config.getInt("punch.proxy.http.port")
 			val Address = new InetSocketAddress(Host, Port)
 
-			val Hostnames = config.getStringList("smack.proxy.http.hostnameRegexes") map (_.r)
+			val Hostnames = config.getStringList("punch.proxy.http.hostnameRegexes") map (_.r)
 		}
 	}
 
-	val DefaultCommand = config.getString("smack.defaultCommand")
-	val Smackfile = config.getString("smack.smackfile")
+	val DefaultCommand = config.getString("punch.defaultCommand")
+	val Punchfile = config.getString("punch.punchfile")
 	
-	private val RawDirectory = config.getString("smack.directory")
+	private val RawDirectory = config.getString("punch.directory")
 	val Directory = new File(Seq("sh", "-c", s"echo $RawDirectory").!!.trim)  // Hacky and evil, but the best way I've found so far for expanding the path
 }
 

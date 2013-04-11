@@ -1,4 +1,4 @@
-package se.nullable.smack
+package se.nullable.punch
 
 import akka.actor.{Actor, ActorRef, ActorContext, IO, IOManager, Props, Status}
 import akka.util.{ByteString, Timeout}
@@ -148,7 +148,7 @@ class HttpProxy(host: InetSocketAddress, processManager: ActorRef, hostnameRegex
 HTTP 502 Bad Gateway
 Content-Type: text/plain
 
-Smack error: Unknown hostname "$rawHost" (parses to "$optHost")
+Punch error: Unknown hostname "$rawHost" (parses to "$optHost")
 """))
 		}) andThen {
 			case Failure(error) =>
@@ -163,7 +163,7 @@ Smack error: Unknown hostname "$rawHost" (parses to "$optHost")
 HTTP 502 Bad Gateway
 Content-Type: text/plain
 
-Smack error: Internal exception occurred. Stack trace below:
+Punch error: Internal exception occurred. Stack trace below:
 
 """) ++ trace)
 			case Success(v) => socket.write(v)

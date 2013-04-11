@@ -1,4 +1,4 @@
-package se.nullable.smack
+package se.nullable.punch
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 
@@ -40,7 +40,7 @@ class ProcessManager extends Actor {
 					//context.system.stop(runningServices(serviceName))
 					runningServices(serviceName) ! RestartProcess
 				} else {
-					runningServices += serviceName -> context.actorOf(Props(ProcessMonitor(settings.DefaultCommand, new File(dir, settings.Smackfile), dir, data.port)), name = s"process_$serviceName")
+					runningServices += serviceName -> context.actorOf(Props(ProcessMonitor(settings.DefaultCommand, new File(dir, settings.Punchfile), dir, data.port)), name = s"process_$serviceName")
 				}
 			}
 		case FileDeleted(dir) =>
@@ -55,10 +55,10 @@ class ProcessManager extends Actor {
 }
 
 
-object Smack extends App {
+object Punch extends App {
 	println("Press enter to stop")
-	val system = ActorSystem("Smack")
-	system.actorOf(Props[ProcessManager], name = "smack")
+	val system = ActorSystem("Punch")
+	system.actorOf(Props[ProcessManager], name = "punch")
 	//val actor = system.actorOf(Props(ForemanMonitor(new java.io.File("."), 11000)))
 	readLine()
 	system.shutdown()

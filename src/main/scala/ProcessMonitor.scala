@@ -1,4 +1,4 @@
-package se.nullable.smack
+package se.nullable.punch
 
 import akka.actor.{Actor, Props, Kill, OneForOneStrategy, SupervisorStrategy}
 import SupervisorStrategy.Restart
@@ -42,10 +42,10 @@ class ProcessMonitor(processBuilder: ProcessBuilder) extends Actor {
 }
 
 object ProcessMonitor {
-	def apply(defaultCmd: String, smackfile: File, dir: File, port: Int): ProcessMonitor = {
+	def apply(defaultCmd: String, punchfile: File, dir: File, port: Int): ProcessMonitor = {
 		val cmd =
-			if (smackfile.exists)
-				Seq("sh", smackfile.getAbsolutePath)
+			if (punchfile.exists)
+				Seq("sh", punchfile.getAbsolutePath)
 			else
 				Seq("sh", "-c", defaultCmd)
 

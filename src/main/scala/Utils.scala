@@ -1,6 +1,6 @@
 package se.nullable
 
-package object smack {
+package object punch {
 	class OptPartialFunction[A, B](val f: A => Option[B]) extends PartialFunction[A, B] {
 		def apply(a: A): B = f(a).get
 		def isDefinedAt(a: A): Boolean = !f(a).isEmpty
