@@ -34,7 +34,7 @@ Usage
 3. Start smack: `$ sbt run` in this folder
 4. Set up a Procfile or a Smackfile in your web application's directory
 5. `$ ln -s /path/to/your/application/ ~/.smack/foobar`
-6. `$ xdg-open http://foobar.lvh.me/`
+6. `$ xdg-open http://foobar.lvh.me:8080/`
 
 
 [sbt]: http://scala-sbt.org/
