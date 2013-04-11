@@ -30,8 +30,8 @@ Usage
 -----
 
 1. Install [sbt][sbt] if you don't already have it
-2. Create the directory `~/.puncpunch`
-3. Start smack: `$ sbt run` in this folder
+2. Create the directory `~/.punch`
+3. Start Punch: `$ sbt run` in this folder
 4. Set up a Procfile or a Punchfile in your web application's directory
 5. `$ ln -s /path/to/your/application/ ~/.smack/foobar`
 6. `$ xdg-open http://foobar.lvh.me:8080/`
