@@ -12,3 +12,7 @@ out
 .project
 RUNNING_PID
 .settings
+arch/pkg
+arch/src
+arch/punch
+arch/*.pkg.tar.xz

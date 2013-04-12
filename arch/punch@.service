@@ -1,0 +1,11 @@
+[Unit]
+Description=Development server for web applications
+Wants=punch-socat.service
+RequiredBy=punch-socat.service
+
+[Service]
+ExecStart=/opt/punch/bin/start se.nullable.punch.PunchKernel
+User=%i
+
+[Install]
+WantedBy=multi-user.target

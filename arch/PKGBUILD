@@ -1,0 +1,42 @@
+# Maintainer: Teo Klestrup Röijezon <teo@nullable.se>
+pkgname=punch-git
+pkgver=0.0.0
+pkgrel=1
+pkgdesc="Development server for web applications"
+arch=(any)
+url="https://github.com/dontcare4free/punch"
+license=('MIT')
+groups=()
+depends=(java-runtime socat)
+makedepends=(java-environment git sbt)
+optdepends=()
+provides=(punch)
+conflicts=(punch)
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=('git://github.com/dontcare4free/punch.git' 'punch@.service' 'punch-socat.service')
+noextract=()
+md5sums=('SKIP' 'SKIP' 'SKIP')
+
+pkgver() {
+  cd punch
+  git describe --always | sed 's|-|.|g'
+}
+
+build() {
+  cd "$srcdir/punch"
+  sbt dist
+}
+
+package() {
+  mkdir -p "$pkgdir/opt"
+  mv "$srcdir/punch/target/punch-dist" "$pkgdir/opt/punch"
+
+  chown -R root:root "$pkgdir/opt/punch"
+
+  install -Dm644 "$srcdir/punch@.service" "$pkgdir/usr/lib/systemd/system/punch@.service"
+  install -Dm644 "$srcdir/punch-socat.service" "$pkgdir/usr/lib/systemd/system/punch-socat.service"
+}

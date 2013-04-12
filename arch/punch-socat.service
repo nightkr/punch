@@ -1,0 +1,6 @@
+[Unit]
+Description=Socat reverse proxy for Punch
+
+[Service]
+# Remember to update the IP here if you change the listening IP in Smack
+ExecStart=/usr/bin/socat TCP-LISTEN:80,bind=127.0.0.1,reuseaddr,fork,su=nobody TCP:127.0.0.1:8080
